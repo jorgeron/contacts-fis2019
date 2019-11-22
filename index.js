@@ -18,7 +18,15 @@ var db = new Datastore({
 
 app.get(BASE_API_PATH + "/contacts", (req, res) => {
     console.log(Date() + " - GET /contacts")
-    res.send([])
+    
+    db.find({}, (err, contacts) => {
+        if (err) {
+            console.log(Date() + '-' + err)
+            res.sendStatus(500)
+        } else {
+            res.send(contacts)
+        }
+    })
 })
 
 app.post(BASE_API_PATH + "/contacts", (req, res) => {
